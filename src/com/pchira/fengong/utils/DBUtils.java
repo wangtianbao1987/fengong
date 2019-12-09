@@ -18,7 +18,7 @@ public class DBUtils {
 	public static Connection getConnection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			return DriverManager.getConnection("jdbc:mysql://pvcp.pachira.cn:3306/fengong?useSSL=false&characterEncoding=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull", "root", "pachira");
+			return DriverManager.getConnection("jdbc:mysql://172.22.144.135:3306/fengong?useSSL=false&characterEncoding=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull", "root", "pachira");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
