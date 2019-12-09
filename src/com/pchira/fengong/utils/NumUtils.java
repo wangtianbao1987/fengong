@@ -11,10 +11,13 @@ public class NumUtils {
 		}
 	}
 	
-	public static int chu(Object o1, Object o2) {
+	public static double chu(Object o1, Object o2) {
 		try {
-			int k1 = obj2Int(o1);
-			int k2 = obj2Int(o2);
+			Double k1 = obj2Double(o1);
+			double k2 = obj2Double(o2);
+			if (k2 == 0) {
+				return 0D;
+			}
 			return k1 / k2;
 		} catch (Exception e) {
 			return 0;
@@ -35,12 +38,19 @@ public class NumUtils {
 	
 	public static int obj2Int(Object o) {
 		try {
-			return Integer.parseInt(o.toString());
+			return (int)obj2Double(o);
 		} catch (Exception e) {
 			return 0;
 		}
 	}
 	
+	public static double obj2Double(Object o) {
+		try {
+			return Double.parseDouble(o.toString());
+		} catch (Exception e) {
+			return 0D;
+		}
+	}
 	
 	
 }

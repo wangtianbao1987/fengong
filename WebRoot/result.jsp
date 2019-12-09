@@ -36,7 +36,7 @@ yinlian = (yinlian==null?new HashMap<String,Object>() : yinlian);
 <table style="width:100%" border="1" bordercolor="#CCC">
 <tr>
 <th>类型</th>
-<th>正确召回数量</th>
+<th>召回数量</th>
 <th>错误召回数量</th>
 <th>未召回数量</th>
 <th>解析正确数量</th>
