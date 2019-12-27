@@ -29,7 +29,7 @@ public class Receive extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 			String userName = URLDecoder.decode(request.getParameter("userName"), "UTF-8");
 			conn = DBUtils.getConnection();
-			String sql = "select id,filePath,userName,receiveStatus,telUnHit,idCardUnHit,jobNumUnHit,sexUnHit,ageUnHit,addressUnHit,yinlianUnHit from t_files where id=" + id;
+			String sql = "select id,filePath,userName,receiveStatus,telUnHit,idCardUnHit,jobNumUnHit,sexUnHit,ageUnHit,addressUnHit,yinlianUnHit,personNameUnHit,chepaiUnHit,chejiaUnHit,baodanUnHit from t_files where id=" + id;
 			List<Map<String, Object>> findList = DBUtils.queryBySql(conn, sql);
 			if(findList == null || findList.isEmpty()) {
 				WebUtils.print("id传入有误", request, response);
@@ -38,12 +38,12 @@ public class Receive extends HttpServlet {
 			Map<String, Object> map = findList.get(0);
 			int receiveStatus = Integer.parseInt(map.get("receiveStatus").toString());
 			Object userNamex = map.get("userName");
-			if (receiveStatus != 0 && !userName.equals(userNamex)) {
+			if (receiveStatus != 0 && !userName.equals(userNamex) && !"admin".equals(userName)) {
 				WebUtils.print("已被其他用户提取：" + userNamex, request, response);
 				return;
 			}
 			
-			if (!userName.equals(userNamex)) {
+			if (!userName.equals(userNamex) && !userName.equals("admin")) {
 				sql = "select count(1) ct from t_files where userName=?";
 				findList = DBUtils.queryBySql(conn, sql, new Object[] {userName});
 				if(findList != null && !findList.isEmpty()) {
@@ -53,7 +53,6 @@ public class Receive extends HttpServlet {
 						return;
 					}
 				}
-				
 				sql = "update t_files set userName=?, receiveStatus=? where id=?";
 				DBUtils.executeSql(conn, sql, new Object[] {userName, 1, id});
 			}

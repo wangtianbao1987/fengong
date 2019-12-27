@@ -65,7 +65,7 @@ int fileId = Integer.parseInt(request.getParameter("id"));
 
 $('.addBtn').unbind('click').bind('click',function(){
 	myAlert({
-		message:'<div class="alertData">类型：<select class="type"><option value="tel">手机号码</option><option value="idCard">身份证号</option><option value="jobNum">工号</option><option value="sex">性别</option><option value="age">年龄</option><option value="address">地址</option><option value="yinlian">银行卡号</option></select><br/>'
+		message:'<div class="alertData">类型：<select class="type"><option value="tel">手机号码</option><option value="idCard">身份证号</option><option value="jobNum">工号</option><option value="sex">性别</option><option value="age">年龄</option><option value="address">地址</option><option value="yinlian">银行卡号</option><option value="personName">客户姓名</option><option value="chepai">车牌号</option><option value="chejia">车架号</option><option value="baodan">保单号</option></select><br/>'
 			+ '角色：<select class="roleName"><option value="R0">R0</option><option value="R1">R1</option></select><br/>'
 			+ '开始位置：<input type="number" class="startItem" placeholder="第几条记录"/> <input type="number" class="startWordsIndex" placeholder="索引位置"/><br/>'
 			+ '结束位置：<input type="number" class="endItem" placeholder="第几条记录"/> <input type="number" class="endWordsIndex" placeholder="索引位置"/><br/>'

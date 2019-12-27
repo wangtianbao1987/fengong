@@ -1,5 +1,5 @@
 
-# search.types=tel,idCard,jobNum,sex,age,address,yinlian
+# search.types=tel,idCard,jobNum,sex,age,address,yinlian,personName,chepai,chejia,baodan
 search.types=tel,idCard,jobNum,sex,age,address,yinlian
 
 search.tel.typeName=手机号码

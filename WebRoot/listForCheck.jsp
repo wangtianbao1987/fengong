@@ -20,7 +20,7 @@
 <div class="datas">
 <div>当前接收人： <span class="currentUser"></span></div>
 
-<div><a href="result" target="result">结果统计</a> | <a href="updateResult" target="updateResult">更新结果</a> | <a href="listForCheck.jsp" target="listForCheck">数据校对列表</a></div>
+<div><a href="result" target="result">结果统计</a> | <a href="updateResult" target="updateResult">更新结果</a> | <a href="index.jsp" target="index">标注列表</a></div>
 
 <table style="width:100%" border="1" bordercolor="#CCC">
 	<thead class="title">
@@ -89,14 +89,12 @@ var loadDatas = function(){
 			var tr = $('<tr>');
 			var td1 = $('<td>');
 			var td2 = $('<td>');
-			if(handleLocalStorage('get', 'userName') == 'admin' || data.receiveStatus == 0 || data.userName == handleLocalStorage('get', 'userName')) {
-				td1.html('<a href="receive?id='+data.id+'&userName='+encodeURI(encodeURI(handleLocalStorage('get', 'userName')))+'">' + data.filePath + '</a>');
-				td2.html(data.userName);
-				var td3 = $('<td>');
-				td3.html(data.receiveStatus==0?'未接收':(data.receiveStatus==1?'接收未处理':(data.receiveStatus==2?'已处理':'未接收')));
-				tr.append(td1).append(td2).append(td3);
-				$('.content').append(tr);
-			}
+			td1.html('<a href="checkItem?id='+data.id+'">' + data.filePath + '</a>');
+			td2.html(data.userName);
+			var td3 = $('<td>');
+			td3.html(data.receiveStatus==0?'未接收':(data.receiveStatus==1?'接收未处理':(data.receiveStatus==2?'已处理':'未接收')));
+			tr.append(td1).append(td2).append(td3);
+			$('.content').append(tr);
 		});
 	},'json');
 };
