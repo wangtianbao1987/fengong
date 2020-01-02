@@ -13,12 +13,12 @@ search.jobNum.typeName=工号
 search.jobNum.target.regex=([0-9]*[02-9][0-9]*(?=.{0,5}为您服务))|((?<=工号.{0,7})[0-9]*[02-9][0-9]*)
 
 search.sex.typeName=性别
-search.sex.target.str=先生|女士|小姐|姐姐
-search.sex.val2val=先生=男|女士=女|小姐=女|姐姐=女
+search.sex.target.str=先生|男|哥|女|姐|姑娘
+search.sex.val2val=先生=男|男=男|哥=男|女=女|姐=女|姑娘=女
 
 search.age.typeName=年龄
-search.age.target.regex=[0-9十两]+(?=[周虚]?岁)
-search.age.transVal=number
+search.age.target.regex=([0-9十两]+.{0,2}岁)|((?<=年龄.{0,2})[0-9十两]+(.?岁)?)
+# search.age.transVal=number
 
 search.address.typeName=地址
 search.address.target.type=address

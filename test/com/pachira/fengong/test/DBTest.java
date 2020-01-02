@@ -3,7 +3,9 @@ package com.pachira.fengong.test;
 import java.io.File;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -132,6 +134,66 @@ public class DBTest {
 		}
 	}
 	
+	@Test
+	public void setMarkContent() {
+		Connection conn = null;
+		try {
+			
+			String sql1 = "select distinct filePath from t_mark";
+			conn = DBUtils.getConnection();
+			List<Map<String, Object>> list1 = DBUtils.queryBySql(conn, sql1);
+			StringBuilder sb1 = new StringBuilder();
+			Object[] filePaths = new Object[list1.size()];
+			for(int i=0;i<list1.size();i++) {
+				Map<String, Object> map1 = list1.get(i);
+				sb1.append(",?");
+				filePaths[i] = map1.get("filePath");
+			}
+			String sql2 = "select filePath, role0, role1 from t_files where filePath in ("+sb1.substring(1)+")";
+			List<Map<String, Object>> list2 = DBUtils.queryBySql(conn, sql2, filePaths);
+			Map<String, Map<String, Object>> MAP2 = new HashMap<String, Map<String, Object>>();
+			for(Map<String, Object> map2 : list2) {
+				MAP2.put(map2.get("filePath").toString(), map2);
+			}
+			
+			String sql3 = "select id, filePath, roleName, startItem, endItem from t_mark";
+			List<Map<String, Object>> list3 = DBUtils.queryBySql(conn, sql3);
+			String sql4 = "update t_mark set markContent=? where id=?";
+			List<Object[]> PARAM4 = new ArrayList<Object[]>();
+			for(Map<String, Object> map3 : list3) {
+				try {
+					Object[] param4 = new Object[2];
+					String filePath = map3.get("filePath").toString();
+					Map<String, Object> map2 = MAP2.get(filePath);
+					String roleName = map3.get("roleName").toString();
+					String[] speaks = null;
+					if("R0".equals(roleName)) {
+						speaks = map2.get("role0").toString().split("\n");
+					} else {
+						speaks = map2.get("role1").toString().split("\n");
+					}
+					StringBuilder sb = new StringBuilder();
+					int startItem = Integer.parseInt(map3.get("startItem").toString());
+					int endItem = Integer.parseInt(map3.get("endItem").toString());
+					for(int i = startItem; i <= endItem; i++) {
+						sb.append(speaks[i]).append("★");
+					}
+					param4[0] = sb.toString();
+					param4[1] = map3.get("id").toString();
+					PARAM4.add(param4);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			DBUtils.executeSql(conn, sql4, PARAM4);
+			
+			System.out.println("OVER");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CommonUtils.close(conn);
+		}
+	}
 	
 	
 	

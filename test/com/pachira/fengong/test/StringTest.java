@@ -25,5 +25,29 @@ public class StringTest {
 		}
 		System.out.println("end..");
 	}
+	
+	@Test
+	public void test02() {
+		String regex = "([0-9十两]+.{0,2}岁)|((?<=年龄.{0,2})[0-9十两]+(.?岁)?)";
+		Pattern p = Pattern.compile(regex);
+		String input = "对我我的年龄就是40多了。";
+		Matcher m = p.matcher(input);
+		while(m.find()) {
+			System.out.println(m.group());
+		}
+		System.out.println("END.........");
+	}
+	
+	@Test
+	public void test03() {
+		String regex = "([0-9]*[02-9][0-9]*(?=.{0,5}为您服务))|((?<=工号.{0,7})[0-9]*[02-9][0-9]*)";
+		Pattern p = Pattern.compile(regex);
+		String input = "	呃，您这边的话呢？目前所处是绿瘦集团总部啊。客服中心啊，我这边的话呢，本人姓肖哦，我的工号呢是6312";
+		Matcher m = p.matcher(input);
+		while(m.find()) {
+			System.out.println(m.group());
+		}
+		System.out.println("END.........");
+	}
 
 }

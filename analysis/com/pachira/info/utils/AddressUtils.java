@@ -34,14 +34,14 @@ public class AddressUtils {
             List<Integer> indexes = indexMap.get(shengName);
             for (Integer index : indexes) {
                 String addrAround = null;
-                if (speak.length() > index + 35) {
-                    // 取35个字，从这35个字中找地址
-                    addrAround = speak.substring(index, index + 36);
+                if (speak.length() > index + 40) {
+                    // 取40个字，从这40个字中找地址
+                    addrAround = speak.substring(index, index + 41);
                 } else {
                     addrAround = speak.substring(index);
                 }
                 int endIndex = -1;
-                for (int i = addrAround.length() - 1; i > 3; i--) {
+                for (int i = addrAround.length() - 1; i > shengName.length(); i--) {
                     char ch = addrAround.charAt(i);
                     if (ch == '省' || ch == '市' || ch == '区' || ch == '县' || ch == '镇' || ch == '乡'
                             || ch == '村' || ch == '庄' || ch == '道' || ch == '路' || ch == '厦'
