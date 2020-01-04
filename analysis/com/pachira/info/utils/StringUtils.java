@@ -50,11 +50,12 @@ public class StringUtils {
         int newStart = 0;
         while((index = source.indexOf(target)) != -1) {
             res.add(newStart + index);
-            newStart = index + target.length();
-            if (newStart == source.length()) {
+            newStart = newStart + index + target.length();
+            int startIndex = index + target.length();
+            if (startIndex >= source.length()) {
                 break;
             }
-            source = source.substring(newStart);
+            source = source.substring(startIndex);
         }
         return res;
     }

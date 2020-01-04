@@ -102,10 +102,11 @@ public class DBTest {
 			List<Object[]> paramValss2 = new ArrayList<Object[]>();
 			for (File xmlFile : files) {
 				RecognizeText rtext = Analysis.analysis(xmlFile);
+				List<RecogniItem> items = rtext.getItems();
 				List<FindObj> findObjs = rtext.getFindObjs();
 				for(int i=0;i<findObjs.size();i++) {
 					FindObj findObj = findObjs.get(i);
-					Object[] itemVal2 = new Object[10];
+					Object[] itemVal2 = new Object[11];
 					itemVal2[0] = xmlFile.getAbsolutePath();
 					itemVal2[1] = findObj.getType();
 					itemVal2[2] = findObj.getMatchStr();
@@ -118,13 +119,37 @@ public class DBTest {
 					itemVal2[7] = endItem.getIndexRoleItem();
 					itemVal2[8] = findObj.getEndWords();
 					itemVal2[9] = startItem.getRoleName() + "-" + startItem.getIndexRoleItem() + ":" + findObj.getStartWords() + "," + endItem.getIndexRoleItem() + ":" + findObj.getEndWords();
+					
+					StringBuffer sb = new StringBuffer();
+					int start = findObj.getStartItem().getIndexRoleItem();
+					int end = findObj.getEndItem().getIndexRoleItem();
+					String rn = items.get(0).getRoleName();
+					int py = 0;
+					if (!rn.equals(startItem.getRoleName())) {
+						py = 1;
+					}
+					for(int j = start; j <= end; j++) {
+						RecogniItem item = items.get(j * 2 + py);
+						String text = item.getText();
+						int startWords = findObj.getStartWords();
+						int endWords = findObj.getEndWords();
+						if(j == start) {
+							text = text.substring(startWords);
+							endWords = endWords-startWords;
+						}
+						if(j == end) {
+							text = text.substring(0, endWords);
+						}
+						sb.append(text + "★");
+					}
+					itemVal2[10] = sb.toString();
 					paramValss2.add(itemVal2);
 				}
 			}
 			conn = DBUtils.getConnection();
 			String sql1 = "TRUNCATE TABLE t_hit_data";
 			DBUtils.executeSql(conn, sql1);
-			String sql2 = "insert into t_hit_data(filePath,type,matchStr,showStr,roleName,startItem,startWordsIndex,endItem,endWordsIndex,location) values (?,?,?,?,?,?,?,?,?,?)";
+			String sql2 = "insert into t_hit_data(filePath,type,matchStr,showStr,roleName,startItem,startWordsIndex,endItem,endWordsIndex,location,str) values (?,?,?,?,?,?,?,?,?,?,?)";
 			DBUtils.executeSql(conn, sql2, paramValss2);
 			System.out.println("OVER");
 		} catch (Exception e) {
@@ -195,6 +220,19 @@ public class DBTest {
 		}
 	}
 	
+	@Test
+	public void setHit() {
+		Connection conn = null;
+		try {
+			String sql = "UPDATE t_mark set hit=1 where EXISTS(SELECT 1 from t_hit_data t where t.type=t_mark.type and t.startItem=t_mark.startItem and t.roleName=t_mark.roleName)";
+			conn = DBUtils.getConnection();
+			DBUtils.executeSql(conn, sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			CommonUtils.close(conn);
+		}
+	}
 	
 	
 }

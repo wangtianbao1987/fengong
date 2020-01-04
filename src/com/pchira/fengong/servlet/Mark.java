@@ -29,9 +29,17 @@ public class Mark extends HttpServlet {
 			String type = request.getParameter("type");
 			String roleName = request.getParameter("roleName");
 			int startItem = Integer.parseInt(request.getParameter("startItem"));
-			int startWordsIndex = Integer.parseInt(request.getParameter("startWordsIndex"));
+			String startWordsIndexVal = request.getParameter("startWordsIndex");
+			String endWordsIndexVal = request.getParameter("endWordsIndex");
+			if(CommonUtils.isEmpty(startWordsIndexVal) || "NaN".equals(startWordsIndexVal)) {
+				startWordsIndexVal = "0";
+			}
+			if(CommonUtils.isEmpty(endWordsIndexVal) || "NaN".equals(endWordsIndexVal)) {
+				endWordsIndexVal = "0";
+			}
+			int startWordsIndex = Integer.parseInt(startWordsIndexVal);
 			int endItem = Integer.parseInt(request.getParameter("endItem"));
-			int endWordsIndex = Integer.parseInt(request.getParameter("endWordsIndex"));
+			int endWordsIndex = Integer.parseInt(endWordsIndexVal);
 			String recevCont = request.getParameter("recevCont");
 			String id = UUID.randomUUID().toString();
 			String sql = "insert into t_mark(id,filePath,type,roleName,startItem,startWordsIndex,endItem,endWordsIndex,recevCont,location) values (?,?,?,?,?,?,?,?,?,?)";

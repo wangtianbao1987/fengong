@@ -52,7 +52,7 @@ public class FindObj implements Cloneable {
         }
         this.showStr = res.toString();
     }
-
+    
     @Override
     public FindObj clone() {
         try {
@@ -62,4 +62,14 @@ public class FindObj implements Cloneable {
             return null;
         }
     }
+
+	@Override
+	public String toString() {
+		return "FindObj [type=" + type + ", typeName=" + typeName + ", matchStr=" + matchStr + ", showStr=" + showStr
+				+ ", startItem=" + startItem.getIndexRoleItem() + ", endItem=" + endItem.getIndexRoleItem() + ", startWords=" + startWords + ", endWords="
+				+ endWords + ", getType()=" + getType() + ", getTypeName()=" + getTypeName() + ", getMatchStr()="
+				+ getMatchStr() + ", getShowStr()=" + getShowStr() + ", getStartItem()=" + getStartItem()
+				+ ", getEndItem()=" + getEndItem() + ", getStartWords()=" + getStartWords() + ", getEndWords()="
+				+ getEndWords() + "]\n";
+	}
 }

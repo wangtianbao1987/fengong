@@ -20,7 +20,7 @@
 <div class="datas">
 <div>当前接收人： <span class="currentUser"></span></div>
 
-<div><a href="result" target="result">结果统计</a> | <a href="updateResult" target="updateResult">更新结果</a> | <a href="listForCheck.jsp" target="listForCheck">数据校对列表</a></div>
+<div><a href="result2" target="result2">结果统计</a> | <a href="updateResult" target="updateResult">更新结果</a> | <a href="listForCheck.jsp" target="listForCheck">数据校对列表</a></div>
 
 <table style="width:100%" border="1" bordercolor="#CCC">
 	<thead class="title">
